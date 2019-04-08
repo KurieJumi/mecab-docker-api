@@ -1,0 +1,12 @@
+Flask==1.0.2
+requests==2.18.4
+Django
+uwsgi
+PyMySQL
+flask
+numpy
+pandas
+sklearn
+gensim
+nltk
+mecab-python3
