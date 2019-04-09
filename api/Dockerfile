@@ -1,46 +1,40 @@
 # IMP For uwsgi - nginx config see: https://hub.docker.com/r/tiangolo/uwsgi-nginx-flask/
-# https://qiita.com/NickelCreate/items/bed3dc9d088b57127ba7
-# mecab related reference : https://qiita.com/oreyutarover/items/909d614ca3b48d2c9e16
 
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 
-MAINTAINER Kurie Jumi "kurie.jumi@gmail.com"
+WORKDIR /opt
 
+# Basic installation
 RUN apt-get update \
-    && apt-get install -y mecab \
-    && apt-get install -y libmecab-dev \
-    && apt-get install -y mecab-ipadic-utf8\
-    && apt-get install -y git\
-    && apt-get install -y make\
-    && apt-get install -y curl\
-    && apt-get install -y xz-utils\
-    && apt-get install -y file\
-    && apt-get install -y sudo\
-    && apt-get install -y wget
+  && apt-get install -y sudo \
+  && apt-get install -y python3 \
+  && apt-get install -y python3-pip \
+  && apt-get install -y curl \
+  && apt-get install -y git \
+  && apt-get install -y make \
+  && apt-get install -y cron \
+  && apt-get install -y wget \
+  && apt-get install -y xz-utils \
+  && apt-get install -y file \
+  && apt-get install -y mecab \
+  && apt-get install -y libmecab-dev \
+  && apt-get install -y mecab-ipadic-utf8 \
+  && apt-get install -y swig \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
-RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git\
-    && cd mecab-ipadic-neologd\
-    && bin/install-mecab-ipadic-neologd -n -y
+RUN pip3 install --upgrade pip
 
-RUN apt-get install -y software-properties-common vim
-RUN add-apt-repository ppa:jonathonf/python-3.6
-RUN apt-get update
+# Install NEologd Dictionary
+# WORKDIR /var/lib/mecab/dic
+# RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
+# WORKDIR /var/lib/mecab/dic/mecab-ipadic-neologd
+# RUN ./bin/install-mecab-ipadic-neologd -n -y
 
-RUN apt-get install -y build-essential python3.6 python3.6-dev python3-pip python3.6-venv
-RUN python3.6 -m pip install pip --upgrade
+COPY . /opt/api
+WORKDIR /opt/api
 
-RUN pip install mysqlclient
+RUN pip3 install -r requirements.txt
 
-RUN mkdir /code
+CMD ["python3", "server.py"]
 
-WORKDIR /code
-
-ADD requirements.txt /code/
-
-RUN pip install -r requirements.txt
-
-ADD . /code/
-
-ENTRYPOINT [ "python" ]
-
-CMD [ "app.py" ]

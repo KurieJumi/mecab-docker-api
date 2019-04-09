@@ -1,12 +1,11 @@
 Flask==1.0.2
+Flask-Cors==3.0.3
 requests==2.18.4
 Django
 uwsgi
-PyMySQL
-flask
 numpy
 pandas
 sklearn
 gensim
 nltk
-mecab-python3
+mecab-python3==0.7
