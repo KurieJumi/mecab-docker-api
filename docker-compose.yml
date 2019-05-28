@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   api:
     build: ./api
@@ -7,3 +8,11 @@ services:
     ports:
       - "5000:5000"
     restart: always
+  jupyter:
+    build: ./api
+    volumes:
+      - "./jupyter:/opt/work"
+    ports:
+      - "8888:8888"
+    restart: always
+    command: jupyter notebook --ip=0.0.0.0 --allow-root --no-browser

@@ -33,6 +33,18 @@ To kill (stop forcefully) container. Specify which service to kill.
 docker kill [service]
 ```
 
+To [ssh into docker container](http://phase2.github.io/devtools/common-tasks/ssh-into-a-container/)
+```
+docker exec -it <container id> /bin/bash
+```
+
 ... to be updated soon
 
+To open jupyter after you docker-compose up and everything is running look for the token and copy and paste http://localhost:8888/?token=<TOKEN YOU SEE ON SERVER SIMILAR TO CODE BELOW> to your browser
+```
+To access the notebook, open this file in a browser:
+jupyter_1  |         file:///root/.local/share/jupyter/runtime/nbserver-1-open.html
+jupyter_1  |     Or copy and paste one of these URLs:
+jupyter_1  |         http://(b27090dc995f or 127.0.0.1):8888/?token=c1a351b12a03a8ee0ddc7a87ae3a4d7dadeb1648d78b5b88
+```
 

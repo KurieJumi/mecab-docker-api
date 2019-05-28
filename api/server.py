@@ -4,14 +4,11 @@ import json
 import MeCab
 
 from flask import Flask, abort, jsonify, request
-from flask_cors import CORS
 from pprint import pprint as pp
-
+# log memo : https://www.subarunari.com/entry/2017/10/07/014911
 
 app = Flask(__name__)
 # app.config['JSON_AS_ASCII'] = False
-
-cors = CORS(app, resources={r"/mecab/*": {"origins": "*"}})
 
 messages = ['Success', 'Failed']
 
@@ -64,12 +61,19 @@ def mecab_parse(sentence, dic):
         dic_name = 'ipadic-utf8'
 
     m = MeCab.Tagger('-d ' + dic_dir + dic_name)
+    # print("testing inside mecab_parse")
+    app.logger.info('[mecab_parse] info') 
 
-    # 出力フォーマット（デフォルト）
+    # default output format of mecab
     format = ['表層形', '品詞', '品詞細分類1', '品詞細分類2', '品詞細分類3', '活用形', '活用型','原型','読み','発音']
+
+    app.logger.info('[mecab_parse] Sample Log') 
 
     return [dict(zip(format, (lambda x: [x[0]]+x[1].split(','))(p.split('\t')))) for p in m.parse(sentence).split('\n')[:-2]]
 
+def japanese_preprocess():
+
+    return "yay"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
