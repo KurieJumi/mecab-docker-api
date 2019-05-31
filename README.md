@@ -38,7 +38,12 @@ To [ssh into docker container](http://phase2.github.io/devtools/common-tasks/ssh
 docker exec -it <container id> /bin/bash
 ```
 
-... to be updated soon
+To clean up cache after running docker containers
+```
+docker system prune -a
+```
+
+## Jupyter Basics
 
 To open jupyter after you docker-compose up and everything is running look for the token and copy and paste http://localhost:8888/?token=<TOKEN YOU SEE ON SERVER SIMILAR TO CODE BELOW> to your browser
 ```

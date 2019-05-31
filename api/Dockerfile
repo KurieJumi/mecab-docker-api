@@ -26,12 +26,6 @@ RUN apt-get update \
 
 RUN pip3 install --upgrade pip
 
-# Install NEologd Dictionary
-WORKDIR /var/lib/mecab/dic
-RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
-WORKDIR /var/lib/mecab/dic/mecab-ipadic-neologd
-RUN ./bin/install-mecab-ipadic-neologd -n -y
-
 COPY . /opt/api
 WORKDIR /opt/api
 
